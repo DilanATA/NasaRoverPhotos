@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/roverPhotosFragment">
+
+    <fragment
+        android:id="@+id/roverPhotosFragment"
+        android:name="com.dilanata.nasaroverphotos.ui.RoverPhotos.RoverPhotosFragment"
+        android:label="fragment_rover_photos"
+        tools:layout="@layout/fragment_rover_photos" >
+        <action
+            android:id="@+id/action_roverPhotosFragment_to_roverPhotoDetailFragment"
+            app:destination="@id/roverPhotoDetailFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/roverPhotoDetailFragment"
+        android:name="com.dilanata.nasaroverphotos.ui.Detail.RoverPhotoDetailFragment"
+        android:label="fragment_rover_photo_detail"
+        tools:layout="@layout/fragment_rover_photo_detail" />
+</navigation>
