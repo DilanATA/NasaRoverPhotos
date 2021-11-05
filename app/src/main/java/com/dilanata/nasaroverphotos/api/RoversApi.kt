@@ -14,7 +14,7 @@ interface RoversApi {
         @QueryMap map: Map<String,String>
     ): NasaRoverPhotos
 
-    @GET("/mars-photos/api/v1/rovers/{roverType}/photos?sol=1000")
+    @GET("/mars-photos/api/v1/rovers/{roverType}/photos?")
     suspend fun getRoverPhotosByCamera(
         @Path("roverType") roverType: String?,
         @QueryMap map: Map<String, String>

@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dilanata.nasaroverphotos.R
 import com.dilanata.nasaroverphotos.api.model.Photo
-import com.dilanata.nasaroverphotos.base.BaseAdapter
 import com.dilanata.nasaroverphotos.databinding.ItemRoverPhotosBinding
 import com.github.ajalt.timberkt.i
 
@@ -41,16 +40,13 @@ class RoverPhotoAdapter(
         )
 
     override fun onBindViewHolder(holder: RoverPhotoHolder, position: Int) {
-        //holder.itemRoverPhotosBinding.ivPhoto.load(roverPhotos[position].img_src)
         holder.itemRoverPhotosBinding.photo = roverPhotos[position]
 
         holder.itemRoverPhotosBinding.llPhoto.setOnClickListener {
             onClickListener.onClickForDetail(roverPhotos[position])
         }
-        if(roverPhotos[position] != null) {
-           // holder.itemRoverPhotosBinding.photo = roverPhotos[position]
-        }
     }
+
     override fun getItemCount(): Int = roverPhotos.size
 
     interface OnClickListener {

@@ -36,8 +36,4 @@ class RoverPhotosVM @Inject constructor(
             }
         }
     }
-
-
-    // fun getRoverPhotos(roverType: String): LiveData<Resource<NasaRoverPhotos>> = roverPhotosRepository.getRoverPhotos(roverType).asLiveData()
-  //  fun getRoverPhotosByCamera(roverType: String, camera: String): LiveData<Resource<NasaRoverPhotos>> = roverPhotosRepository.getRoverPhotosByCamera(roverType, camera).asLiveData()
 }

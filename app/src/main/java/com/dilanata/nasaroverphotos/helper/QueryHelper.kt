@@ -14,8 +14,8 @@ fun queryMap(page: Int) : Map<String, String>{
 fun queryMapByCamera(page: Int, camera: String) : Map<String, String>{
     val map = HashMap<String, String>()
     map["sol"] = "1000"
+    map["camera"] = camera
     map["page"] = page.toString()
     map["api_key"] = API_KEY
-    map["camera"] = camera
     return map
 }

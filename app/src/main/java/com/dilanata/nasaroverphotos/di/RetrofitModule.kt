@@ -1,6 +1,7 @@
 package com.dilanata.nasaroverphotos.di
 
 import com.dilanata.nasaroverphotos.api.RoversApi
+import com.dilanata.nasaroverphotos.util.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -20,11 +21,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 open class RetrofitModule {
-    //https://api.nasa.gov/mars-photos/api/v1/
-    // rovers/curiosity/photos?sol=1000&api_key=S37WvxwkpbFNmS1cF1VBqbti0TKWQdU0iKX8zC71
 
-
-    val baseUrl: String = "https://api.nasa.gov"
     val contentType = "application/json".toMediaType()
 
     @Provides
@@ -36,7 +33,7 @@ open class RetrofitModule {
                 ignoreUnknownKeys = true
                 isLenient = true
             }.asConverterFactory(contentType))
-            .baseUrl(baseUrl)
+            .baseUrl(BASE_URL)
             .build()
     }
 

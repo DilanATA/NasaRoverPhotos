@@ -29,7 +29,6 @@ fun Fragment.navigateSafe(
     }
 }
 
-
 var Fragment.selectedRover: RoverTypes
     get() = getSharedPref(SharedKeys.DEFAULT_SHARED_KEYS, requireContext(), SharedKeys.selectRover)
     set(value) {

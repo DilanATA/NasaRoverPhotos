@@ -44,6 +44,7 @@ class RoverPhotosFragment :
     var tabPosition: Int = 0
     var tabSelection = RoverTypes.CURIOSITY.name
 
+    var spinnerName = ""
 
     private val roverPhotosVM: RoverPhotosVM by navGraphViewModels(R.id.nav_graph) {
         defaultViewModelProviderFactory
@@ -70,7 +71,6 @@ class RoverPhotosFragment :
         roverPhotosVM.photos.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    i { "datalar -> ${it.data}" }
                     nasaRoverPhotos = it.data!!
                     if (page == 1) {
                         roverPhotoAdapter = RoverPhotoAdapter(
@@ -102,12 +102,23 @@ class RoverPhotosFragment :
                 val isReachedToEnd = lastVisibleItemPosition + 5 > totalItemCount
                 if (isReachedToEnd && totalItemCount > 0 && !loading) {
                     page += 1
-                    roverPhotosVM.getRoverPhotos(
-                        roverType = selectedRover.typeName,
-                        map = queryMap(
-                            page = page
+                    if (spinnerName == "" || spinnerName.contains("All Photos")) {
+                        roverPhotosVM.getRoverPhotos(
+                            roverType = selectedRover.typeName,
+                            map = queryMap(
+                                page = page
+                            )
                         )
-                    )
+                    } else {
+                        roverPhotosVM.getRoverPhotosByCamera(
+                            roverType = selectedRover.typeName,
+                            map = queryMapByCamera(
+                                page = page,
+                                camera = spinnerName
+                            )
+                        )
+                    }
+
                     loading = true
                 }
             }
@@ -126,21 +137,17 @@ class RoverPhotosFragment :
                 tabSelection = tab.text.toString()
                 when (tabSelection) {
                     RoverTypes.CURIOSITY.name -> {
-                        page = 1
                         selectedRover = RoverTypes.CURIOSITY
-                        onClick()
                     }
                     RoverTypes.OPPORTUNITY.name -> {
-                        page = 1
                         selectedRover = RoverTypes.OPPORTUNITY
-                        onClick()
                     }
                     RoverTypes.SPIRIT.name -> {
-                        page = 1
                         selectedRover = RoverTypes.SPIRIT
-                        onClick()
                     }
                 }
+                page = 1
+                onClick()
                 binding.progressBar.hide()
             }
 
@@ -164,12 +171,12 @@ class RoverPhotosFragment :
                 position: Int,
                 id: Long
             ) {
-                val name = parent?.getItemAtPosition(position).toString()
+                spinnerName = parent?.getItemAtPosition(position).toString()
                 page = 1
-                if (name.contains("All Photos")) {
+                if (spinnerName.contains("All Photos")) {
                     onClick()
                 } else {
-                    filterByCamera(name)
+                    filterByCamera(spinnerName)
                 }
             }
 
@@ -197,19 +204,18 @@ class RoverPhotosFragment :
     }
 
     fun filterByCamera(camera: String) {
-            i {"filtered"}
         roverPhotosVM.getRoverPhotosByCamera(
             selectedRover.typeName,
             map = queryMapByCamera(
-                page = 1,
-                camera = camera
+                camera = camera,
+                page = 1
             )
         )
 
         roverPhotosVM.photosByCamera.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    i { "datalar -> ${it.data}" }
+                    i { "datalar -> ${it.data?.photos?.size}" }
                     nasaRoverPhotos = it.data!!
                     if (page == 1) {
                         roverPhotoAdapter = RoverPhotoAdapter(
